@@ -4,9 +4,9 @@ $(document).ready(function () {
 
     function displayFailGifs() {
 
-        var fails = $(this).attr("data-name");
+        var fail = $(this).attr("data-name");
 
-        var queryURL = "https://api.giphy.com/v1/gifs/search?q=fail+" + fails + "&api_key=6IRaFrUJY78MeCrZJgYYVXYo1QdBrvcy&limit=10";
+        var queryURL = "http://api.giphy.com/v1/gifs/search?q=fail+" + fail + "&api_key=6IRaFrUJY78MeCrZJgYYVXYo1QdBrvcy&limit=10";
 
         $.ajax({
 
@@ -16,21 +16,28 @@ $(document).ready(function () {
 
         }).then(function (response) {
 
-            var gif = $("<div id = 'fails'>");
+            console.log(queryURL);
 
-            var rating = response.rating;
+            var gif = $("<div>");
 
-            var pRating = $("<p>").text("Rating: " + rating);
+            for (var i = 0; i < 10; i++) {
 
-            gif.append(pRating);
+                var rating = response.data[i].rating;
 
-            $("#fail-gifs").prepend(gif);
+                var pRating = $("<p>").text("Rating: " + rating);
 
-            var imgURL = response.images
+                gif.append(pRating);
+    
+                $("#fail-gifs").prepend(gif);
+    
+                var imgURL = response.data[i].images.fixed_width.url;
+    
+                var image = $("<img>").attr("src", imgURL);
+    
+                gif.append(image);
 
-            var image = $("<img>").attr("src", imgURL);
+            }
 
-            gif.append(image);
 
         });
 
