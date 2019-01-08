@@ -27,13 +27,13 @@ $(document).ready(function () {
                 var pRating = $("<p>").text("Rating: " + rating);
 
                 gif.append(pRating);
-    
+
                 $("#fail-gifs").prepend(gif);
-    
+
                 var imgURL = response.data[i].images.fixed_width.url;
-    
+
                 var image = $("<img>").attr("src", imgURL);
-    
+
                 gif.append(image);
 
             }
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
             a.addClass("fails");
 
-            a.addClass("btn btn-primary");
+            a.addClass("btn btn-primary btn-fail");
 
             a.attr("data-name", fails[i]);
 
@@ -69,13 +69,15 @@ $(document).ready(function () {
 
         var fail = $("#fail-search").val().trim();
 
+        if (fail === null || fail === "") return;
+
         fails.push(fail);
 
         renderButtons();
 
     });
 
-    $(document).on("click", ".btn", displayFailGifs);
+    $(document).on("click", ".btn-fail", displayFailGifs);
 
     renderButtons();
 
